@@ -10,7 +10,6 @@ export function App() {
       try {
         const getCountry = await fetch('https://ipapi.co/json/');
         const response = await getCountry.json();
-        console.log(response);
         setLocation(`${response.country}/${response.city}`);
       } catch (err) {
         if (err instanceof Error) {
