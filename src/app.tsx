@@ -1,41 +1,17 @@
-import { useEffect, useState } from 'preact/hooks';
+import { Time } from './components/Time';
+import { useWeather } from './hooks/useWeather';
 
+// Framed size: 1080 x 1920
 
 export function App() {
-  const [location, setLocation] = useState<string>();
-  const [resolution, setResolution] = useState<Record<string, number>>();
-
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const getCountry = await fetch('https://ipapi.co/json/');
-        const response = await getCountry.json();
-        setLocation(`${response.country}/${response.city}`);
-      } catch (err) {
-        if (err instanceof Error) {
-          console.log('Error', err.message);
-        }
-
-        console.log('All error info', err);
-      }
-    };
-
-    const deviceResolution = {
-      width: window.innerWidth,
-      height: window.innerHeight,
-    };
-
-    setResolution(deviceResolution);
-
-    init();
-  }, []);
+  const location =  useWeather();
 
   return (
-    <div>
-      <p>Current Location: {location}</p>
-      <p>Browser size</p>
-      <p>{resolution?.width}</p>
-      <p>{resolution?.height}</p>
-    </div>
-  )
-}
+    <>
+      <div className='info'>
+        <p className='location'>{location}</p>
+        <Time />
+      </div>
+    </>
+  );
+};

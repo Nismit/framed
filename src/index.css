@@ -4,10 +4,10 @@ body {
   width: 100%;
   padding: 0;
   margin: 0;
-  background: #fafafa;
+  background: #000;
   font-family: 'Helvetica Neue', arial, sans-serif;
   font-weight: 400;
-  color: #444;
+  color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -18,7 +18,28 @@ body {
 
 #app {
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+}
+
+#app p {
+  margin: 0;
+}
+
+.location {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.info {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+
+.time p {
+  margin: 0;
+  font-size: 84px;
+  font-weight: 700;
 }
