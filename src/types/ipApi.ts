@@ -8,7 +8,7 @@ export type IPAPI = {
   country_capital: string;
   country_code: string;
   country_code_iso3: string;
-  country_name:  string;
+  country_name: string;
   country_population: number;
   country_tld: string;
   currency: string;
