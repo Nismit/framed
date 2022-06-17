@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { Time } from "./components/Time";
+import { useThree } from "./hooks/useThree";
 import { useWeather } from "./hooks/useWeather";
 import { weatherIconMapping } from "./components/utils";
 import { WeatherIconComponents } from "./icons";
@@ -8,10 +9,11 @@ import { WeatherIconComponents } from "./icons";
 
 export function App() {
   const { location, forecasts } = useWeather();
-  console.log(forecasts);
+  const { threeRef } = useThree();
 
   return (
     <>
+      <div ref={threeRef} className="canvasContainer" />
       <div className="info">
         <div className="forecast">
           {forecasts &&
