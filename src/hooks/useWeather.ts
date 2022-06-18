@@ -5,7 +5,7 @@ import { Weather, WeatherForecast } from "../types/weather";
 import { LOCAL_STORAGE_KEY, getOpenWeatherAPI } from "../const";
 
 // ms * sec * min * hour
-const SIX_HOURS = 1000 * 60 * 60 * 6;
+const INTERVAL_TIME = 1000 * 60 * 60 * 3;
 
 // https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
 
@@ -15,20 +15,20 @@ export const useWeather = () => {
 
   const init = async () => {
     try {
-      const sixHoursAgo = subHours(new Date(), 6);
-      const sixHoursAgoDate = new Date(sixHoursAgo);
+      const lastIntervalTime = subHours(new Date(), 6);
+      const lastIntervalTimeDate = new Date(lastIntervalTime);
       const cacheLastSave = localStorage.getItem(LOCAL_STORAGE_KEY.LAST_SAVE);
       const cacheLocation = localStorage.getItem(LOCAL_STORAGE_KEY.LOCATION);
       const cacheWeather = localStorage.getItem(LOCAL_STORAGE_KEY.WEATHER);
 
       // For Debug
-      // console.log("6 hours", sixHoursAgoDate);
+      // console.log("6 hours", lastIntervalTimeDate);
 
       if (
         !cacheLastSave ||
         !cacheLocation ||
         !cacheWeather ||
-        new Date(cacheLastSave) < sixHoursAgoDate
+        new Date(cacheLastSave) < lastIntervalTimeDate
       ) {
         console.log("Cache expire or does not exist");
         const getLocationByIp = await fetch("https://ipapi.co/json/");
@@ -70,7 +70,7 @@ export const useWeather = () => {
     init();
     const interval = setInterval(() => {
       init();
-    }, SIX_HOURS);
+    }, INTERVAL_TIME);
     return () => clearInterval(interval);
   }, []);
 

@@ -57,12 +57,13 @@ body {
 .forecast {
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 500;
 }
 
 .forecast svg {
   fill: #fff;
+  margin-bottom: 10px;
 }
 
 .weather {
@@ -75,7 +76,7 @@ body {
 }
 
 .weather svg {
-  width: 90px;
+  width: 75px;
   height: auto;
 }
 

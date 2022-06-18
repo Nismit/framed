@@ -33,7 +33,8 @@ export function App() {
                 <div className="weather" key={index}>
                   {WeatherIconComponents[iconId]}
                   <span>
-                    {forecast.main.temp_min}℃/{forecast.main.temp_max}℃
+                    {Math.ceil(forecast.main.temp_min)}℃/
+                    {Math.ceil(forecast.main.temp_max)}℃
                   </span>
                   <span>{format(new Date(forecast.dt * 1000), "p")}</span>
                 </div>
