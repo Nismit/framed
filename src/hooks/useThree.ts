@@ -8,7 +8,8 @@ import { boxObject } from "../utils/boxObject";
 
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, 1, 0.1, 10);
-const renderer = new WebGLRenderer({ antialias: true });
+const renderer = new WebGLRenderer({});
+// const renderer = new WebGLRenderer({ antialias: true });
 const stats = Stats();
 document.body.appendChild(stats.dom);
 
