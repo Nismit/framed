@@ -5,6 +5,7 @@ import { useEventListener } from "./useEventListener";
 // import { boxObject } from "../utils/boxObject";
 import baseMesh from "../utils/baseMesh";
 import fragment1 from "../fragments/fbm.frag";
+import fragment2 from "../fragments/triangle.frag";
 
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, 1, 0.1, 10);
@@ -18,7 +19,7 @@ camera.position.z = 3;
 // const cube = boxObject();
 
 const baseObject = new baseMesh({
-  fragment: fragment1,
+  fragment: fragment2,
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio,
