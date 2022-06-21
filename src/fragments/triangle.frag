@@ -43,18 +43,20 @@ void main( void ) {
   vec2 p1 = p * rotation(radians(360.0 * easing));
 
   int N = 3;
-
   float a = atan(p1.x, p1.y) + PI;
   float r = TWO_PI/float(N);
 
   d = cos(floor(.5 + a/r) * r - a)*length(p1);
-
+  float d2 = cos(floor(.5 + a/r) * r - a)*length(p1);
   col = vec3(1.0 - smoothstep(.2, .21, d));
+  col += vec3(step(.15, d2) - 1.0);
+
   col += stroke(circleSDF(p + 0.5), .5, .05);
-  float sdf1 = .5 + (p.x - p.y) * .5;
-  float sdf2 = (p.x + p.y) * .5;
+  vec2 p2 = p * rotation(radians(45.0));
+  float sdf1 = .5 + (p2.x - p2.y) * .5;
+  float sdf2 = .5 + (p2.x - p2.y) * .5;
   col += stroke(sdf1, .1, .1);
-  col += stroke(sdf2, .4, .1);
+  col += stroke(sdf2, .9, .1);
 
   gl_FragColor = vec4(col, 1.);
 }
