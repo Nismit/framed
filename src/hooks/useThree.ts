@@ -4,8 +4,9 @@ import Stats from "three/examples/jsm/libs/stats.module";
 import { useEventListener } from "./useEventListener";
 // import { boxObject } from "../utils/boxObject";
 import baseMesh from "../utils/baseMesh";
-import fragment1 from "../fragments/fbm.frag";
-import fragment2 from "../fragments/triangle.frag";
+// import fragment1 from "../fragments/fbm.frag";
+// import fragment2 from "../fragments/triangle.frag";
+import circle from "../fragments/circle.frag";
 
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, 1, 0.1, 10);
@@ -19,7 +20,7 @@ camera.position.z = 3;
 // const cube = boxObject();
 
 const baseObject = new baseMesh({
-  fragment: fragment2,
+  fragment: circle,
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio,
