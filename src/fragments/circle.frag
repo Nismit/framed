@@ -69,23 +69,17 @@ float stroke(float x, float s, float w) {
 void main( void ) {
   vec2 p = (gl_FragCoord.xy / resolution.xy) * 2.0 - 1.0;
   p.x *= resolution.x / resolution.y;
-  vec2 c = resolution.xy/2.0;
+
   vec3 col = vec3(0.);
   float d = 0.;
   float easing = cubicInOut( float(time) / 300.0 );
   float easing2 = EaseInOutQuad( sin(PI * (time/300.0)) );
-  // p *= rotation(radians(360.0 * easing));
 
   vec2 p1 = p * rotation(radians(360.0 * easing));
 
   int N = 3;
   float a = atan(p1.x, p1.y) + PI;
   float r = TWO_PI/float(N);
-
-  d = cos(floor(.5 + a/r) * r - a)*length(p1);
-  float d2 = cos(floor(.5 + a/r) * r - a)*length(p1);
-  // col = vec3(1.0 - smoothstep(.2, .21, d));
-  // col += vec3(step(.15, d2) - 1.0);
 
   vec3 blue = vec3(0.74,0.95,1.00);
 
@@ -96,11 +90,6 @@ void main( void ) {
   col += stroke(circleSDF(zoom3 + 0.5), .1, .01) * blue;
   col += stroke(circleSDF(zoom2 + 0.5), .2, .01);
   col += stroke(circleSDF(zoom + 0.5), .28, .01);
-  // vec2 p2 = p * rotation(radians(45.0));
-  // float sdf1 = .5 + (p2.x - p2.y) * .5;
-  // float sdf2 = .5 + (p2.x - p2.y) * .5;
-  // col += stroke(sdf1, .1, .1);
-  // col += stroke(sdf2, .9, .1);
 
   gl_FragColor = vec4(col, 1.);
 }
