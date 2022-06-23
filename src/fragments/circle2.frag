@@ -87,11 +87,17 @@ void main( void ) {
 
   vec3 blue = vec3(0.74,0.95,1.00);
 
-  vec2 zoom = scale(vec2(easing2 - 1.0)) * p;
-  vec2 zoom2 = scale(vec2(easing2 - 1.1)) * p;
-  vec2 zoom3 = scale(vec2(easing2 - 0.5)) * p;
-  vec2 zoom4 = scale(vec2(easing2 - 0.3)) * p;
-  vec2 zoom5 = scale(vec2(easing2)) * p;
+  // vec2 zoom = scale(vec2(easing - 1.0)) * p;
+  // vec2 zoom2 = scale(vec2(easing - 1.1)) * p;
+  // vec2 zoom3 = scale(vec2(easing - 0.5)) * p;
+  // vec2 zoom4 = scale(vec2(easing - 0.3)) * p;
+  // vec2 zoom5 = scale(vec2(easing)) * p;
+
+  vec2 zoom = scale(vec2(easing - (1.0 + 0.181))) * p;
+  vec2 zoom2 = scale(vec2(easing - (1.0 + 0.18))) * p;
+  vec2 zoom3 = scale(vec2(easing - (1.0 + 0.038))) * p;
+  vec2 zoom4 = scale(vec2(easing - (1.0 + 0.08149))) * p;
+  vec2 zoom5 = scale(vec2(easing - 1.0)) * p;
 
   col += stroke(circleSDF(zoom3 + 0.5), .1, .001) * blue;
   col += stroke(circleSDF(zoom2 + 0.5), .148, .001);
@@ -100,8 +106,8 @@ void main( void ) {
   col += stroke(circleSDF(zoom4 + 0.5), .22, .001);
   col += stroke(circleSDF(zoom3 + 0.5), .17, .001);
   col += stroke(circleSDF(zoom4 + 0.5), .05, .001);
-  col += stroke(circleSDF(zoom5 + 0.5), .04, .001);
+  col += stroke(circleSDF(zoom5 + 0.5), .08, .001);
   // col += stroke(circleSDF(zoom2 + 0.5), .02, .001);
 
-  gl_FragColor = vec4(col, 1.);
+  gl_FragColor = vec4(col, easing2);
 }
