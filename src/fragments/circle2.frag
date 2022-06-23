@@ -23,6 +23,10 @@ vec3 hsv2rgb_smooth( in vec3 c ) {
 	return c.z * mix( vec3(1.0), rgb, c.y);
 }
 
+float circularOut(float t) {
+  return sqrt((2.0 - t) * t);
+}
+
 float cubicInOut(float t) {
   return t < 0.5
     ? 4.0 * t * t * t
@@ -90,14 +94,14 @@ void main( void ) {
   vec2 zoom5 = scale(vec2(easing2)) * p;
 
   col += stroke(circleSDF(zoom3 + 0.5), .1, .001) * blue;
-  col += stroke(circleSDF(zoom2 + 0.5), .2, .001);
-  col += stroke(circleSDF(zoom + 0.5), .28, .001);
+  col += stroke(circleSDF(zoom2 + 0.5), .148, .001);
+  col += stroke(circleSDF(zoom + 0.5), .028, .001);
   col += stroke(circleSDF(zoom + 0.5), .238, .001);
   col += stroke(circleSDF(zoom4 + 0.5), .22, .001);
   col += stroke(circleSDF(zoom3 + 0.5), .17, .001);
   col += stroke(circleSDF(zoom4 + 0.5), .05, .001);
   col += stroke(circleSDF(zoom5 + 0.5), .04, .001);
-  col += stroke(circleSDF(zoom2 + 0.5), .02, .001);
+  // col += stroke(circleSDF(zoom2 + 0.5), .02, .001);
 
   gl_FragColor = vec4(col, 1.);
 }
