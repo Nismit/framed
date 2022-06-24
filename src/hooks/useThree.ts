@@ -7,7 +7,8 @@ import baseMesh from "../utils/baseMesh";
 // import fragment1 from "../fragments/fbm.frag";
 // import fragment2 from "../fragments/triangle.frag";
 // import circle from "../fragments/circle.frag";
-import circle2 from "../fragments/circle2.frag";
+// import circle2 from "../fragments/circle2.frag";
+import circle3 from "../fragments/circle3.frag";
 
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, 1, 0.1, 10);
@@ -21,7 +22,7 @@ camera.position.z = 3;
 // const cube = boxObject();
 
 const baseObject = new baseMesh({
-  fragment: circle2,
+  fragment: circle3,
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio,
