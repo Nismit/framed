@@ -2,13 +2,8 @@ import { useRef, useEffect, useState, useCallback } from "preact/hooks";
 import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
 // import Stats from "three/examples/jsm/libs/stats.module";
 import { useEventListener } from "./useEventListener";
-// import { boxObject } from "../utils/boxObject";
 import baseMesh from "../utils/baseMesh";
 import { pickRandomFragment } from "../fragments";
-// import fragment1 from "../fragments/fbm.frag";
-// import fragment2 from "../fragments/triangle.frag";
-// import circle from "../fragments/circle.frag";
-// import circle2 from "../fragments/circle2.frag";
 // import circle3 from "../fragments/circle3.frag";
 
 // ms * sec * min * hour
@@ -24,8 +19,6 @@ const renderer = new WebGLRenderer({});
 
 // Config
 camera.position.z = 3;
-// const cube = boxObject();
-
 const randomFragment = pickRandomFragment("Triangle");
 const baseObject = new baseMesh({
   fragment: randomFragment.fragment,
@@ -81,7 +74,6 @@ export const useThree = () => {
     if (threeRef.current) {
       resizeHandler();
       threeRef.current.appendChild(renderer.domElement);
-      // scene.add(cube);
       scene.add(baseObject.mesh);
 
       interval = setInterval(() => {
@@ -96,8 +88,6 @@ export const useThree = () => {
 
     return () => {
       if (threeRef.current) {
-        // scene.remove(cube);
-        // cube.remove();
         baseObject.dispose();
         scene.remove(baseObject.mesh);
         renderer.dispose();

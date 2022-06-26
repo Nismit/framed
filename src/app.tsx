@@ -17,11 +17,11 @@ export function App() {
         <div className="forecast">
           {forecasts &&
             forecasts.map((forecast, index) => {
-              if (index % 2 === 0) {
+              if (index > 3) {
                 return null;
               }
 
-              const { id, description } = forecast.weather[0];
+              const { id } = forecast.weather[0];
               const evening = add(startOfDay(new Date(forecast.dt * 1000)), {
                 hours: 18,
               });
