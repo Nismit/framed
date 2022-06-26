@@ -4,7 +4,7 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
 import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
 import { pickRandomFragment } from "../fragments";
-// import circle3 from "../fragments/circle3.frag";
+// import circle4 from "../fragments/circle4.frag";
 
 // ms * sec * min * hour
 const INTERVAL_TIME = 1000 * 60 * 60 * 1;
