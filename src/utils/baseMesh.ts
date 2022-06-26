@@ -23,26 +23,45 @@ export default class baseMesh {
   private _geometry: PlaneBufferGeometry;
   private _material: RawShaderMaterial;
   private _uniform: { [key: string]: IUniform<any> };
+  private _vertex: string;
+  private _fragment: string;
+  private _fragmentKey: string;
 
   constructor(props: {
     vertex?: string;
     fragment: string;
+    fragmentKey: string;
     uniform: { [key: string]: IUniform<any> };
   }) {
-    const { vertex, fragment, uniform } = props;
+    const { vertex, fragment, fragmentKey, uniform } = props;
     this._uniform = uniform;
+    this._vertex = vertex ?? vertexTemplate;
+    this._fragment = fragment;
     this._geometry = new PlaneBufferGeometry(2, 2);
     this._material = new RawShaderMaterial({
       uniforms: this._uniform,
-      vertexShader: vertex ?? vertexTemplate,
-      fragmentShader: fragment,
+      vertexShader: this._vertex,
+      fragmentShader: this._fragment,
       transparent: true,
     });
     this._mesh = new Mesh(this._geometry, this._material);
+    this._fragmentKey = fragmentKey;
   }
 
   get mesh() {
     return this._mesh;
+  }
+
+  get key() {
+    return this._fragmentKey;
+  }
+
+  set fragment(value: string) {
+    this._fragment = value;
+  }
+
+  set key(value: string) {
+    this._fragmentKey = value;
   }
 
   set resolution(value: { x: number; y: number }) {
@@ -51,6 +70,18 @@ export default class baseMesh {
 
   set time(value: number) {
     this._uniform.time.value = value;
+  }
+
+  reGenerate() {
+    this._geometry = new PlaneBufferGeometry(2, 2);
+    this._material = new RawShaderMaterial({
+      uniforms: this._uniform,
+      vertexShader: this._vertex,
+      fragmentShader: this._fragment,
+      transparent: true,
+    });
+    this._material.needsUpdate = true;
+    this._mesh = new Mesh(this._geometry, this._material);
   }
 
   dispose() {

@@ -5,6 +5,7 @@ uniform vec2 seed;
 
 #define PI 3.14159265359
 #define TWO_PI 6.28318530718
+float TAU = PI * 2.0;
 
 #define SMOOTH(r,R) (1.0-smoothstep(R-1.0,R+1.0, r))
 
@@ -62,25 +63,26 @@ void main( void ) {
   vec2 c = resolution.xy/2.0;
   vec3 col = vec3(0.);
   float d = 0.;
+  float loop = sin(TAU * (time - 0.75)/300.0)/2.0 + 0.5;
   float easing = cubicInOut( float(time) / 300.0 );
   // p *= rotation(radians(360.0 * easing));
 
-  vec2 p1 = p * rotation(radians(360.0 * easing));
+  vec2 p1 = p * rotation(radians(360.0 * loop));
 
-  int N = 3;
+  int N = 5;
   float a = atan(p1.x, p1.y) + PI;
   float r = TWO_PI/float(N);
 
   d = cos(floor(.5 + a/r) * r - a)*length(p1);
   float d2 = cos(floor(.5 + a/r) * r - a)*length(p1);
-  // col = vec3(1.0 - smoothstep(.2, .21, d));
-  // col += vec3(step(.15, d2) - 1.0);
+  col = vec3(1.0 - smoothstep(.2, .21, d));
+  col += vec3(step(.15, d2) - 1.0);
 
-  vec2 zoom = scale(vec2(easing)) * p;
+  vec2 zoom = scale(vec2(loop)) * p;
 
   // col += stroke(circleSDF(zoom + 0.5), .1, .01);
   // col += stroke(circleSDF(zoom + 0.5), .2, .01);
-  col += circle3(gl_FragCoord.xy, c, 313.0, 4.0) * vec3(0.74,0.95,1.00);
+  // col += circle3(gl_FragCoord.xy, c, 313.0, 4.0) * vec3(0.74,0.95,1.00);
   // vec2 p2 = p * rotation(radians(45.0));
   // float sdf1 = .5 + (p2.x - p2.y) * .5;
   // float sdf2 = .5 + (p2.x - p2.y) * .5;

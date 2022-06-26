@@ -1,43 +1,44 @@
 import { useRef, useEffect, useState, useCallback } from "preact/hooks";
 import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
-import Stats from "three/examples/jsm/libs/stats.module";
+// import Stats from "three/examples/jsm/libs/stats.module";
 import { useEventListener } from "./useEventListener";
 // import { boxObject } from "../utils/boxObject";
 import baseMesh from "../utils/baseMesh";
+import { pickRandomFragment } from "../fragments";
 // import fragment1 from "../fragments/fbm.frag";
 // import fragment2 from "../fragments/triangle.frag";
 // import circle from "../fragments/circle.frag";
 // import circle2 from "../fragments/circle2.frag";
-import circle3 from "../fragments/circle3.frag";
+// import circle3 from "../fragments/circle3.frag";
+
+// ms * sec * min * hour
+const INTERVAL_TIME = 1000 * 60 * 60 * 1;
 
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, 1, 0.1, 10);
 const renderer = new WebGLRenderer({});
-// const renderer = new WebGLRenderer({ antialias: true });
-const stats = Stats();
-document.body.appendChild(stats.dom);
+
+// Stats
+// const stats = Stats();
+// document.body.appendChild(stats.dom);
 
 // Config
 camera.position.z = 3;
 // const cube = boxObject();
 
+const randomFragment = pickRandomFragment("Triangle");
 const baseObject = new baseMesh({
-  fragment: circle3,
+  fragment: randomFragment.fragment,
+  fragmentKey: randomFragment.key,
   uniform: {
     pixelRatio: {
-      value: window.devicePixelRatio,
+      value: window.devicePixelRatio.toFixed(1),
     },
     resolution: {
       value: new Vector2(),
     },
     time: {
       value: 0,
-    },
-    // offset: {
-    //   value: 0.75,
-    // },
-    seed: {
-      value: new Vector2(-0.345, 0.654),
     },
   },
 });
@@ -70,30 +71,38 @@ export const useThree = () => {
     // sketch.time = frame ?? time;
     baseObject.time = frame ?? time;
     renderer.render(scene, camera);
-    stats.update();
+    // stats.update();
   };
 
   useEventListener("resize", resizeHandler);
 
   useEffect(() => {
+    let interval: number;
     if (threeRef.current) {
       resizeHandler();
       threeRef.current.appendChild(renderer.domElement);
       // scene.add(cube);
-      // scene.add(sketch.mesh);
       scene.add(baseObject.mesh);
+
+      interval = setInterval(() => {
+        const pickKey = pickRandomFragment(baseObject.key);
+        baseObject.key = pickKey.key;
+        baseObject.fragment = pickKey.fragment;
+        scene.remove(baseObject.mesh);
+        baseObject.reGenerate();
+        scene.add(baseObject.mesh);
+      }, INTERVAL_TIME);
     }
 
     return () => {
       if (threeRef.current) {
-        // sketch.dispose();
-        // scene.remove(sketch.mesh);
         // scene.remove(cube);
         // cube.remove();
         baseObject.dispose();
         scene.remove(baseObject.mesh);
         renderer.dispose();
         threeRef.current.removeChild(renderer.domElement);
+        interval && clearInterval(interval);
       }
     };
   }, [threeRef]);
