@@ -4,7 +4,7 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
 import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
 import { pickRandomFragment } from "../fragments";
-// import circle5 from "../fragments/circle5.frag";
+// import circle6 from "../fragments/circle6.frag";
 
 // ms * sec * min * hour
 const INTERVAL_TIME = 1000 * 60 * 60 * 1;
@@ -59,8 +59,6 @@ export const useThree = () => {
   };
 
   const render = (frame?: number) => {
-    // cube.rotation.x += 0.01;
-    // cube.rotation.y += 0.01;
     // sketch.time = frame ?? time;
     baseObject.time = frame ?? time;
     renderer.render(scene, camera);
