@@ -59,7 +59,7 @@ void main( void ) {
   vec3 background = vec3(0.,0.239,0.357);
   float thick = 0.01;
 
-  col += mix(vec3(0.188,0.388,0.557), background, smoothstep(0., thick, squareSDF(p, (loop2 - 1.0) + 0.5)));
+  col += mix(vec3(0.929,0.682,0.286), background, smoothstep(0., thick, squareSDF(p, (loop2 - 1.0) + 0.5)));
   col += mix(vec3(0.188,0.388,0.557), vec3(0.), smoothstep(0., thick, squareSDF(p, (loop2 - 1.0) + 0.7)));
   col += mix(vec3(0.82,0.286,0.357), vec3(0.), smoothstep(0., thick, squareSDF(p, (loop2 - 1.0) + 1.0)));
   col += mix(vec3(0.,0.475,0.549), vec3(0.), smoothstep(0., thick, squareSDF(p, (loop2 + 0.15))));
