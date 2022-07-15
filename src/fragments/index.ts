@@ -12,6 +12,7 @@ import Circle9 from "../fragments/circle9.frag";
 import Circle10 from "../fragments/circle10.frag";
 import Rectangle from "../fragments/rectangle.frag";
 import Rectangle2 from "../fragments/rectangle2.frag";
+import Rectangle3 from "../fragments/rectangle3.frag";
 
 const fragmentMap: Record<string, string> = {
   Triangle: Triangle,
@@ -27,6 +28,7 @@ const fragmentMap: Record<string, string> = {
   Circle10: Circle10,
   Rectangle: Rectangle,
   Rectangle2: Rectangle2,
+  Rectangle3: Rectangle3,
 };
 
 export const pickRandomFragment = (current: string) => {
