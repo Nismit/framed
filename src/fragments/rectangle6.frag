@@ -56,10 +56,10 @@ void main( void ) {
   vec3 blue2 = vec3(0.682,0.827,0.949);
 
   // color fetch: palette
-  vec3 col = .5 + (.5 * sin(f + blue1));
+  vec3 col = .2 + (.5 * sin(f + blue1));
 
   // lighting: light at end of the tunnel
-  col = 0.5 + (col / r) / 6.;
+  col = 0.5 + (col / r) / 5.;
 
   gl_FragColor = vec4(col, 1.0);
 }
