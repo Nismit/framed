@@ -9,26 +9,6 @@ float TAU = PI * 2.0;
 #include ./utils/hsv2rgb.frag;
 #include ./utils/cubicInOut.frag;
 
-float circularOut(float t) {
-  return sqrt((2.0 - t) * t);
-}
-
-vec2 tunnel(vec2 uv, float size, float time) {
-  vec2 p  = -1.0 + (2.0 * uv);
-  float a = atan(p.y, p.x);
-  float r = sqrt(dot(p, p));
-  return vec2(a / PI, time + (size / r));
-}
-
-float mix2(float x, float y, bool a) {
-  return a ? y : x;
-}
-
-float atan2(in float y, in float x) {
-  bool s = (abs(x) > abs(y));
-  return mix2(PI/2.0 - atan(x,y), atan(y,x), s);
-}
-
 void main( void ) {
   vec2 p = (gl_FragCoord.xy / resolution.xy) * (2.0 / pixelRatio) - 1.0;
   p.x *= resolution.x / resolution.y;
