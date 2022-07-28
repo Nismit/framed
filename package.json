@@ -10,7 +10,7 @@
   "dependencies": {
     "date-fns": "2.29.1",
     "preact": "10.10.0",
-    "three": "0.142.0"
+    "three": "0.143.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "2.3.0",
