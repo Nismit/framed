@@ -69,10 +69,10 @@ void main( void ) {
   vec2 v7 = p - line7;
   vec2 v8 = p - line8;
 
-  col += smoothstep(0., 1.5, acos(dot(v1, v2) / (length(v1) * length(v2))) / PI) * clamp(loop, 0.3, 1.0);
-  col += smoothstep(0., 1.5, acos(dot(v3, v4) / (length(v3) * length(v4))) / PI) * 0.8 * clamp(loop, 0.3, 1.0);
-  col += smoothstep(0., 1.5, acos(dot(v5, v6) / (length(v5) * length(v6))) / PI) * 0.8 * clamp(loop, 0.3, 1.0);
-  col += smoothstep(0., 1.5, acos(dot(v7, v8) / (length(v7) * length(v8))) / PI) * clamp(loop, 0.3, 1.0);
+  col += smoothstep(0., 1.5, acos(dot(v1, v2) / (length(v1) * length(v2))) / PI) * clamp(loop + 0.3, 0.5, 1.0);
+  col += smoothstep(0., 1.5, acos(dot(v3, v4) / (length(v3) * length(v4))) / PI) * 0.8 * clamp(loop + 0.3, 0.5, 1.0);
+  col += smoothstep(0., 1.5, acos(dot(v5, v6) / (length(v5) * length(v6))) / PI) * 0.8 * clamp(loop + 0.3, 0.5, 1.0);
+  col += smoothstep(0., 1.5, acos(dot(v7, v8) / (length(v7) * length(v8))) / PI) * clamp(loop + 0.3, 0.5, 1.0);
   // float ze = dot(v1, v2) * dot(v3, v4);
   // float fe = length(v1) * length(v2) * length(v3) * length(v4);
   // col += acos(ze / fe) / PI;
