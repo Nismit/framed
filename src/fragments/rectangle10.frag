@@ -38,7 +38,7 @@ void main( void ) {
   vec3 col = vec3(0.008,0.286,0.349);
 
   float d = step(0., boxSDF(pr, vec2(clamp(loop * 1.1, 0., 1.2))));
-  col = mix(vec3(0.231,0.737,0.851), vec3(0.008,0.286,0.349), d);
+  col = mix(vec3(0.012,0.396,0.549), vec3(0.008,0.286,0.349), d);
 
   float d3 = step(0., boxSDF(pr, vec2(clamp((loop * 0.9) - 0.1, 0., .9))));
   col = mix(vec3(0.949,0.718,0.02), col, d3);
@@ -47,10 +47,10 @@ void main( void ) {
   col = mix(vec3(0.533,0.91,0.949), col, d2);
 
   float d4 = step(0., boxSDF(pr, vec2(clamp((loop * 0.8) - 0.3, 0., .8))));
-  col = mix(vec3(0.749,0.565,0.459), col, d4);
+  col = mix(vec3(0.949,0.529,0.02), col, d4);
 
   float d5 = step(0., boxSDF(pr2, vec2(clamp((loop * 0.7) - 0.4, 0., .7))));
-  col = mix(vec3(0.949,0.255,0.255), col, d5);
+  col = mix(vec3(0.651,0.125,0.078), col, d5);
 
   gl_FragColor = vec4(col, 1.0);
 }
