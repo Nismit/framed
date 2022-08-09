@@ -1,5 +1,5 @@
 // import fbm from "../fragments/fbm.frag";
-import Triangle from "../fragments/triangle.frag";
+import Polygon from "../fragments/polygon.frag";
 import Circle from "../fragments/circle.frag";
 import Circle2 from "../fragments/circle2.frag";
 import Circle3 from "../fragments/circle3.frag";
@@ -22,7 +22,7 @@ import Rectangle9 from "../fragments/rectangle9.frag";
 import Rectangle10 from "../fragments/rectangle10.frag";
 
 const fragmentMap: Record<string, string> = {
-  Triangle: Triangle,
+  Polygon: Polygon,
   Circle: Circle,
   Circle2: Circle2,
   Circle3: Circle3,
