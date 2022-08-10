@@ -77,11 +77,15 @@ void main( void ) {
 
   vec2 zoom = scale(vec2(easing2 - 1.0)) * p;
   vec2 zoom2 = scale(vec2(easing2 - 1.1)) * p;
-  vec2 zoom3 = scale(vec2(easing2 - 0.5)) * p;
+  vec2 zoom3 = scale(vec2(easing - 0.5)) * p;
 
-  col += stroke(circleSDF(zoom3 + 0.5), .1, .01) * blue;
-  col += stroke(circleSDF(zoom2 + 0.5), .2, .01);
-  col += stroke(circleSDF(zoom + 0.5), .28, .01);
+  col += stroke(circleSDF(zoom3 + 0.5), .12, .008) * blue;
+  col += stroke(circleSDF(zoom3 + 0.5), .18, .008) * blue;
+  col += stroke(circleSDF(zoom3 + 0.5), .15, .008) * blue;
+  col += stroke(circleSDF(zoom2 + 0.5), .15, .01);
+  col += stroke(circleSDF(zoom + 0.5), .18, .01);
+  col += stroke(circleSDF(zoom + 0.5), .20, .01);
 
-  gl_FragColor = vec4(col, 1.);
+
+  gl_FragColor = vec4(col, 1. - length(p));
 }
