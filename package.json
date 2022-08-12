@@ -2,6 +2,7 @@
   "name": "framed",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -17,6 +18,6 @@
     "@types/three": "0.143.0",
     "typescript": "4.7.4",
     "vite": "3.0.4",
-    "vite-plugin-glsl": "0.2.2"
+    "vite-plugin-glsl": "0.3.0"
   }
 }
