@@ -1,3 +1,5 @@
+import { h } from "preact";
+import { Suspense } from "preact/compat";
 import { format, startOfDay, add, isAfter } from "date-fns";
 import { Time } from "./components/Time";
 import { Canvas } from "./components/Canvas";
@@ -29,18 +31,24 @@ export function App() {
               const iconId = `${isNight ? "Night" : "Day"}${
                 weatherIconMapping[id]
               }`;
+
+              const Comp = WeatherIconComponents[iconId];
+
               return (
-                <div className="weather" key={index}>
-                  {WeatherIconComponents[iconId]}
-                  <span>
-                    {Math.ceil(forecast.main.temp_min)}℃/
-                    {Math.ceil(forecast.main.temp_max)}℃
-                  </span>
-                  <span>{format(new Date(forecast.dt * 1000), "p")}</span>
-                </div>
+                <Suspense fallback={<div>loading...</div>}>
+                  <div className="weather">
+                    <Comp />
+                    <span>
+                      {Math.ceil(forecast.main.temp_min)}℃/
+                      {Math.ceil(forecast.main.temp_max)}℃
+                    </span>
+                    <span>{format(new Date(forecast.dt * 1000), "p")}</span>
+                  </div>
+                </Suspense>
               );
             })}
         </div>
+
         <div>
           <p className="location">{location}</p>
           <Time />
