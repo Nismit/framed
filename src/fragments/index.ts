@@ -1,55 +1,32 @@
-// import fbm from "../fragments/fbm.frag";
-import Polygon from "../fragments/polygon.frag";
-import Polygon2 from "../fragments/polygon2.frag";
-import Circle from "../fragments/circle.frag";
-import Circle2 from "../fragments/circle2.frag";
-import Circle3 from "../fragments/circle3.frag";
-import Circle4 from "../fragments/circle4.frag";
-import Circle5 from "../fragments/circle5.frag";
-import Circle6 from "../fragments/circle6.frag";
-import Circle7 from "../fragments/circle7.frag";
-import Circle8 from "../fragments/circle8.frag";
-import Circle9 from "../fragments/circle9.frag";
-import Circle10 from "../fragments/circle10.frag";
-import Rectangle from "../fragments/rectangle.frag";
-import Rectangle2 from "../fragments/rectangle2.frag";
-import Rectangle3 from "../fragments/rectangle3.frag";
-import Rectangle4 from "../fragments/rectangle4.frag";
-import Rectangle5 from "../fragments/rectangle5.frag";
-import Rectangle6 from "../fragments/rectangle6.frag";
-import Rectangle7 from "../fragments/rectangle7.frag";
-import Rectangle8 from "../fragments/rectangle8.frag";
-import Rectangle9 from "../fragments/rectangle9.frag";
-import Rectangle10 from "../fragments/rectangle10.frag";
-
-const fragmentMap: Record<string, string> = {
-  Polygon: Polygon,
-  Polygon2: Polygon2,
-  Circle: Circle,
-  Circle2: Circle2,
-  Circle3: Circle3,
-  Circle4: Circle4,
-  Circle5: Circle5,
-  Circle6: Circle6,
-  Circle7: Circle7,
-  Circle8: Circle8,
-  Circle9: Circle9,
-  Circle10: Circle10,
-  Rectangle: Rectangle,
-  Rectangle2: Rectangle2,
-  Rectangle3: Rectangle3,
-  Rectangle4: Rectangle4,
-  Rectangle5: Rectangle5,
-  Rectangle6: Rectangle6,
-  Rectangle7: Rectangle7,
-  Rectangle8: Rectangle8,
-  Rectangle9: Rectangle9,
-  Rectangle10: Rectangle10,
+const fragmentMap: Record<string, Promise<string>> = {
+  Polygon: import("../fragments/polygon.frag").then((f) => f.default),
+  Polygon2: import("../fragments/polygon2.frag").then((f) => f.default),
+  Circle: import("../fragments/circle.frag").then((f) => f.default),
+  Circle2: import("../fragments/circle2.frag").then((f) => f.default),
+  Circle3: import("../fragments/circle3.frag").then((f) => f.default),
+  Circle4: import("../fragments/circle4.frag").then((f) => f.default),
+  Circle5: import("../fragments/circle5.frag").then((f) => f.default),
+  Circle6: import("../fragments/circle6.frag").then((f) => f.default),
+  Circle7: import("../fragments/circle7.frag").then((f) => f.default),
+  Circle8: import("../fragments/circle8.frag").then((f) => f.default),
+  Circle9: import("../fragments/circle9.frag").then((f) => f.default),
+  Circle10: import("../fragments/circle10.frag").then((f) => f.default),
+  Rectangle: import("../fragments/rectangle.frag").then((f) => f.default),
+  Rectangle2: import("../fragments/rectangle2.frag").then((f) => f.default),
+  Rectangle3: import("../fragments/rectangle3.frag").then((f) => f.default),
+  Rectangle4: import("../fragments/rectangle4.frag").then((f) => f.default),
+  Rectangle5: import("../fragments/rectangle5.frag").then((f) => f.default),
+  Rectangle6: import("../fragments/rectangle6.frag").then((f) => f.default),
+  Rectangle7: import("../fragments/rectangle7.frag").then((f) => f.default),
+  Rectangle8: import("../fragments/rectangle8.frag").then((f) => f.default),
+  Rectangle9: import("../fragments/rectangle9.frag").then((f) => f.default),
+  Rectangle10: import("../fragments/rectangle10.frag").then((f) => f.default),
 };
 
-export const pickRandomFragment = (current: string) => {
+export const pickRandomFragment = async (current: string) => {
   const keys = Object.keys(fragmentMap).filter((key) => key !== current);
   // https://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
   const pickKey = keys[(keys.length * Math.random()) << 0];
-  return { key: pickKey, fragment: fragmentMap[pickKey] };
+  const frag = await fragmentMap[pickKey];
+  return { key: pickKey, fragment: frag };
 };

@@ -75,8 +75,8 @@ export const useThree = () => {
       threeRef.current.appendChild(renderer.domElement);
       scene.add(baseObject.mesh);
 
-      interval = setInterval(() => {
-        const pickKey = pickRandomFragment(baseObject.key);
+      interval = setInterval(async () => {
+        const pickKey = await pickRandomFragment(baseObject.key);
         baseObject.key = pickKey.key;
         baseObject.fragment = pickKey.fragment;
         scene.remove(baseObject.mesh);
