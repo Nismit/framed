@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "date-fns": "2.29.1",
+    "date-fns": "2.29.2",
     "preact": "10.10.2",
     "three": "0.143.0"
   },
