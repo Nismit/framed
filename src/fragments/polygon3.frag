@@ -58,7 +58,7 @@ void main( void ) {
 
 
   vec3 col1 = vec3(0.851,0.537,0.537);
-  float o = polygon(p, loop - 0.5, clamp(0., 0.1, loop), 6);
+  float o = polygon(p, loop - 0.5, clamp(0., 0.08, loop), 6);
   // vec3 v = mix(mix(vec3(1.), vec3(0.), o), col1, length(p));
   // vec3(0.851,0.702,0.255)
   // col = mix(smoothstep(col1, col, v), vec3(0.), o);
@@ -68,11 +68,11 @@ void main( void ) {
   p *= rotation(radians(90.0));
 
   vec3 col2 = vec3(0.949,0.686,0.627);
-  float o2 = polygon(p, (loop - 0.5) + .2, (loop * 0.1) + .02, 6);
+  float o2 = polygon(p, (loop - 0.5) + .2, (loop * 0.1) + .002, 6);
   col = mix(col2, col, o2);
 
   vec3 col3 = vec3(0.18,0.565,0.651);
-  float o3 = polygon(p, (loop - 0.34) + .28, (loop * 0.13) + .01, 6);
+  float o3 = polygon(p, (loop - 0.34) + .28, (loop * 0.13) + .005, 6);
   col = mix(col3, col, o3);
 
   vec3 col4 = vec3(0.039,0.333,0.451);
