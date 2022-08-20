@@ -1,6 +1,7 @@
 const fragmentMap: Record<string, Promise<string>> = {
   Polygon: import("../fragments/polygon.frag").then((f) => f.default),
   Polygon2: import("../fragments/polygon2.frag").then((f) => f.default),
+  Polygon3: import("../fragments/polygon3.frag").then((f) => f.default),
   Circle: import("../fragments/circle.frag").then((f) => f.default),
   Circle2: import("../fragments/circle2.frag").then((f) => f.default),
   Circle3: import("../fragments/circle3.frag").then((f) => f.default),

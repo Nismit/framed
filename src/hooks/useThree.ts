@@ -4,7 +4,7 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
 import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
 import { pickRandomFragment } from "../fragments";
-import polygon2 from "../fragments/polygon2.frag";
+import polygon3 from "../fragments/polygon3.frag";
 
 // ms * sec * min * hour
 // const INTERVAL_TIME = 1000 * 60 * 60 * 1;
@@ -22,7 +22,7 @@ const renderer = new WebGLRenderer({});
 camera.position.z = 3;
 // const randomFragment = pickRandomFragment("Triangle");
 const baseObject = new baseMesh({
-  fragment: polygon2,
+  fragment: polygon3,
   fragmentKey: "Polygon2",
   uniform: {
     pixelRatio: {
