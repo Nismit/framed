@@ -11,7 +11,7 @@
   "dependencies": {
     "date-fns": "2.29.2",
     "preact": "10.10.6",
-    "three": "0.143.0"
+    "three": "0.144.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "2.4.0",
