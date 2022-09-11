@@ -66,6 +66,12 @@ body {
   font-weight: 500;
 }
 
+@media (520px >= width) {
+  .forecast {
+    display: none;
+  }
+}
+
 .forecast svg {
   fill: #fff;
   margin-bottom: 10px;
