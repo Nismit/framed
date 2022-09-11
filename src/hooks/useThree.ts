@@ -4,7 +4,7 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
 import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
 import { pickRandomFragment } from "../fragments";
-import polygon3 from "../fragments/polygon3.frag";
+import polygon4 from "../fragments/polygon4.frag";
 
 // ms * sec * min * hour
 // const INTERVAL_TIME = 1000 * 60 * 60 * 1;
@@ -22,8 +22,8 @@ const renderer = new WebGLRenderer({});
 camera.position.z = 3;
 // const randomFragment = pickRandomFragment("Triangle");
 const baseObject = new baseMesh({
-  fragment: polygon3,
-  fragmentKey: "Polygon2",
+  fragment: polygon4,
+  fragmentKey: "Polygon4",
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio.toFixed(1),
@@ -65,8 +65,6 @@ export const useThree = () => {
     renderer.render(scene, camera);
     // stats.update();
   };
-
-  useEventListener("resize", resizeHandler);
 
   useEffect(() => {
     let interval: number;
@@ -119,6 +117,8 @@ export const useThree = () => {
       }
     };
   }, [loop]);
+
+  useEventListener("resize", resizeHandler);
 
   return { threeRef };
 };
