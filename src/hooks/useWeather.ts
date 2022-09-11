@@ -15,7 +15,7 @@ export const useWeather = () => {
 
   const init = async () => {
     try {
-      const lastIntervalTime = subHours(new Date(), 6);
+      const lastIntervalTime = subHours(new Date(), 3);
       const lastIntervalTimeDate = new Date(lastIntervalTime);
       const cacheLastSave = localStorage.getItem(LOCAL_STORAGE_KEY.LAST_SAVE);
       const cacheLocation = localStorage.getItem(LOCAL_STORAGE_KEY.LOCATION);

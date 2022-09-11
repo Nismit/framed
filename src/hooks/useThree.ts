@@ -4,10 +4,11 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
 import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
 import { pickRandomFragment } from "../fragments";
-// import circle5 from "../fragments/circle5.frag";
+import polygon4 from "../fragments/polygon4.frag";
 
 // ms * sec * min * hour
-const INTERVAL_TIME = 1000 * 60 * 60 * 1;
+// const INTERVAL_TIME = 1000 * 60 * 60 * 1;
+const INTERVAL_TIME = 1000 * 60 * 30; // every 30 mins
 
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, 1, 0.1, 10);
@@ -19,10 +20,10 @@ const renderer = new WebGLRenderer({});
 
 // Config
 camera.position.z = 3;
-const randomFragment = pickRandomFragment("Triangle");
+// const randomFragment = pickRandomFragment("Triangle");
 const baseObject = new baseMesh({
-  fragment: randomFragment.fragment,
-  fragmentKey: randomFragment.key,
+  fragment: polygon4,
+  fragmentKey: "Polygon4",
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio.toFixed(1),
@@ -59,15 +60,11 @@ export const useThree = () => {
   };
 
   const render = (frame?: number) => {
-    // cube.rotation.x += 0.01;
-    // cube.rotation.y += 0.01;
     // sketch.time = frame ?? time;
     baseObject.time = frame ?? time;
     renderer.render(scene, camera);
     // stats.update();
   };
-
-  useEventListener("resize", resizeHandler);
 
   useEffect(() => {
     let interval: number;
@@ -76,8 +73,8 @@ export const useThree = () => {
       threeRef.current.appendChild(renderer.domElement);
       scene.add(baseObject.mesh);
 
-      interval = setInterval(() => {
-        const pickKey = pickRandomFragment(baseObject.key);
+      interval = setInterval(async () => {
+        const pickKey = await pickRandomFragment(baseObject.key);
         baseObject.key = pickKey.key;
         baseObject.fragment = pickKey.fragment;
         scene.remove(baseObject.mesh);
@@ -120,6 +117,8 @@ export const useThree = () => {
       }
     };
   }, [loop]);
+
+  useEventListener("resize", resizeHandler);
 
   return { threeRef };
 };

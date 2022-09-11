@@ -1,6 +1,6 @@
 import {
   IUniform,
-  PlaneBufferGeometry,
+  PlaneGeometry,
   RawShaderMaterial,
   Mesh,
   Vector2,
@@ -20,7 +20,7 @@ void main() {
 
 export default class baseMesh {
   private _mesh: Mesh;
-  private _geometry: PlaneBufferGeometry;
+  private _geometry: PlaneGeometry;
   private _material: RawShaderMaterial;
   private _uniform: { [key: string]: IUniform<any> };
   private _vertex: string;
@@ -37,7 +37,7 @@ export default class baseMesh {
     this._uniform = uniform;
     this._vertex = vertex ?? vertexTemplate;
     this._fragment = fragment;
-    this._geometry = new PlaneBufferGeometry(2, 2);
+    this._geometry = new PlaneGeometry(2, 2);
     this._material = new RawShaderMaterial({
       uniforms: this._uniform,
       vertexShader: this._vertex,
@@ -73,7 +73,7 @@ export default class baseMesh {
   }
 
   reGenerate() {
-    this._geometry = new PlaneBufferGeometry(2, 2);
+    this._geometry = new PlaneGeometry(2, 2);
     this._material = new RawShaderMaterial({
       uniforms: this._uniform,
       vertexShader: this._vertex,
