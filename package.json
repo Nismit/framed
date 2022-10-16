@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "date-fns": "2.29.3",
-    "preact": "10.11.0",
+    "preact": "10.11.2",
     "three": "0.145.0"
   },
   "devDependencies": {
