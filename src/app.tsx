@@ -10,24 +10,21 @@ import { WeatherIconComponents } from "./icons";
 // Framed size: 1080 x 1920
 
 export function App() {
-  const { location, forecasts } = useWeather();
+  const { location, filteredData } = useWeather();
 
   return (
     <>
       <Canvas />
       <div className="info">
         <div className="forecast">
-          {forecasts &&
-            forecasts.map((forecast, index) => {
-              if (index > 3) {
-                return null;
-              }
-
+          {filteredData &&
+            filteredData.map((forecast) => {
+              const forecastDate = new Date(forecast.dt * 1000);
               const { id } = forecast.weather[0];
-              const evening = add(startOfDay(new Date(forecast.dt * 1000)), {
+              const evening = add(startOfDay(forecastDate), {
                 hours: 18,
               });
-              const isNight = isAfter(new Date(forecast.dt * 1000), evening);
+              const isNight = isAfter(forecastDate, evening);
               const iconId = `${isNight ? "Night" : "Day"}${
                 weatherIconMapping[id]
               }`;

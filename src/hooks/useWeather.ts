@@ -1,17 +1,19 @@
-import { useState, useEffect } from "preact/hooks";
-import { subHours } from "date-fns";
+import { useState, useEffect, useCallback } from "preact/hooks";
+import { subHours, isBefore } from "date-fns";
 import { IPAPI } from "../types/ipApi";
 import { Weather, WeatherForecast } from "../types/weather";
 import { LOCAL_STORAGE_KEY, getOpenWeatherAPI } from "../const";
 
 // ms * sec * min * hour
-const INTERVAL_TIME = 1000 * 60 * 60 * 3;
+const CACHE_INTERVAL_TIME = 1000 * 60 * 60 * 3;
+const FORECAST_REFRESH_INTERVAL = 1000 * 60 * 60 * 1;
 
 // https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
 
 export const useWeather = () => {
   const [location, setLocation] = useState<string>();
   const [forecasts, setForecasts] = useState<WeatherForecast[]>();
+  const [filteredData, setFilteredData] = useState<WeatherForecast[]>();
 
   const init = async () => {
     try {
@@ -66,13 +68,35 @@ export const useWeather = () => {
     }
   };
 
+  const refreshFilter = () => {
+    const currentDate = new Date();
+    const result = forecasts?.filter((forecast) =>
+      isBefore(currentDate, new Date(forecast.dt * 1000))
+    );
+    setFilteredData(result?.splice(0, 4));
+  };
+
+  useEffect(() => {
+    refreshFilter();
+
+    return () => setFilteredData(undefined);
+  }, [forecasts]);
+
   useEffect(() => {
     init();
     const interval = setInterval(() => {
       init();
-    }, INTERVAL_TIME);
-    return () => clearInterval(interval);
+    }, CACHE_INTERVAL_TIME);
+
+    const refresh = setInterval(() => {
+      refreshFilter();
+    }, FORECAST_REFRESH_INTERVAL);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(refresh);
+    };
   }, []);
 
-  return { location, forecasts };
+  return { location, filteredData };
 };
