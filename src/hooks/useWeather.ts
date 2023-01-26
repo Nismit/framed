@@ -3,6 +3,7 @@ import { subHours, isBefore } from "date-fns";
 import { IPAPI } from "../types/ipApi";
 import { Weather, WeatherForecast } from "../types/weather";
 import { LOCAL_STORAGE_KEY, getOpenWeatherAPI } from "../const";
+import { useInterval } from "./useInterval";
 
 // ms * sec * min * hour
 const CACHE_INTERVAL_TIME = 1000 * 60 * 60 * 3;
@@ -68,35 +69,29 @@ export const useWeather = () => {
     }
   };
 
-  const refreshFilter = () => {
+  const refreshFilter = useCallback(() => {
     const currentDate = new Date();
     const result = forecasts?.filter((forecast) =>
       isBefore(currentDate, new Date(forecast.dt * 1000))
     );
     setFilteredData(result?.splice(0, 4));
-  };
-
-  useEffect(() => {
-    refreshFilter();
-
-    return () => setFilteredData(undefined);
   }, [forecasts]);
+
+  useInterval(() => {
+    init();
+  }, CACHE_INTERVAL_TIME);
+
+  useInterval(() => {
+    refreshFilter();
+  }, FORECAST_REFRESH_INTERVAL);
 
   useEffect(() => {
     init();
-    const interval = setInterval(() => {
-      init();
-    }, CACHE_INTERVAL_TIME);
-
-    const refresh = setInterval(() => {
-      refreshFilter();
-    }, FORECAST_REFRESH_INTERVAL);
-
-    return () => {
-      clearInterval(interval);
-      clearInterval(refresh);
-    };
   }, []);
+
+  useEffect(() => {
+    refreshFilter();
+  }, [forecasts]);
 
   return { location, filteredData };
 };
