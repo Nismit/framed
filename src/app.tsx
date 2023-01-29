@@ -10,7 +10,7 @@ import { WeatherIconComponents } from "./icons";
 // Framed size: 1080 x 1920
 
 export function App() {
-  const { location, filteredData } = useWeather();
+  const { filteredData } = useWeather();
 
   return (
     <>
@@ -47,7 +47,6 @@ export function App() {
         </div>
 
         <div>
-          <p className="location">{location}</p>
           <Time />
         </div>
       </div>
