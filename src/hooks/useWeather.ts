@@ -12,7 +12,6 @@ const FORECAST_REFRESH_INTERVAL = 1000 * 60 * 60 * 1;
 // https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
 
 export const useWeather = () => {
-  const [location, setLocation] = useState<string>();
   const [forecasts, setForecasts] = useState<WeatherForecast[]>();
   const [filteredData, setFilteredData] = useState<WeatherForecast[]>();
 
@@ -21,7 +20,6 @@ export const useWeather = () => {
       const lastIntervalTime = subHours(new Date(), 3);
       const lastIntervalTimeDate = new Date(lastIntervalTime);
       const cacheLastSave = localStorage.getItem(LOCAL_STORAGE_KEY.LAST_SAVE);
-      const cacheLocation = localStorage.getItem(LOCAL_STORAGE_KEY.LOCATION);
       const cacheWeather = localStorage.getItem(LOCAL_STORAGE_KEY.WEATHER);
 
       // For Debug
@@ -29,7 +27,6 @@ export const useWeather = () => {
 
       if (
         !cacheLastSave ||
-        !cacheLocation ||
         !cacheWeather ||
         new Date(cacheLastSave) < lastIntervalTimeDate
       ) {
@@ -54,11 +51,8 @@ export const useWeather = () => {
           new Date().toISOString()
         );
 
-        setLocation(`${locationRes.city} - ${locationRes.country_name}`);
         setForecasts(weatherRes.list);
       } else {
-        const location: IPAPI = JSON.parse(cacheLocation);
-        setLocation(`${location.city} - ${location.country_name}`);
         const weather: Weather = JSON.parse(cacheWeather);
         setForecasts(weather.list);
       }
@@ -93,5 +87,5 @@ export const useWeather = () => {
     refreshFilter();
   }, [forecasts]);
 
-  return { location, filteredData };
+  return { filteredData };
 };
