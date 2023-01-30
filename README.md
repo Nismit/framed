@@ -2,6 +2,8 @@
 
 GLSL gallery app for [Framed MONO X7](https://mono.frm.fm/en/shop/)
 
+![](https://raw.githubusercontent.com/Nismit/framed/develop/assets/Circle.png)
+
 ## Features
 
 - Clock
