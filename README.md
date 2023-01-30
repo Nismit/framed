@@ -2,7 +2,7 @@
 
 GLSL gallery app for [Framed MONO X7](https://mono.frm.fm/en/shop/)
 
-![](https://raw.githubusercontent.com/Nismit/framed/develop/assets/Circle.png)
+![Circle](https://user-images.githubusercontent.com/22581499/215399328-c3bd7fd6-acd1-4f16-8a26-a3b2cfcedfdf.png)
 
 ## Features
 
