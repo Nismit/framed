@@ -4,7 +4,7 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
 import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
 import { pickRandomFragment } from "../fragments";
-import polygon4 from "../fragments/polygon4.frag";
+import fragmentCode from "../fragments/polygon10.frag";
 
 // ms * sec * min * hour
 // const INTERVAL_TIME = 1000 * 60 * 60 * 1;
@@ -22,8 +22,8 @@ const renderer = new WebGLRenderer({});
 camera.position.z = 3;
 // const randomFragment = pickRandomFragment("Triangle");
 const baseObject = new baseMesh({
-  fragment: polygon4,
-  fragmentKey: "Polygon4",
+  fragment: fragmentCode,
+  fragmentKey: "Polygon10",
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio.toFixed(1),
@@ -40,8 +40,64 @@ const baseObject = new baseMesh({
 export const useThree = () => {
   const rafRef = useRef<number>();
   const [time, setTime] = useState(0);
+  const [isRunning, setRunning] = useState(true);
   const threeRef = useRef<HTMLDivElement>(null);
   const totalFrames = 300;
+
+  const keyHandler = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.code === "KeyS") {
+        setRunning(false);
+        render(time);
+        renderer.domElement.toBlob((blob) => {
+          if (blob === null) {
+            return;
+          }
+
+          const a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style.display = "none";
+          a.href = URL.createObjectURL(blob);
+          a.download = "capture.png";
+          a.click();
+          document.body.removeChild(a);
+        });
+      }
+
+      if (event.code === "Space") {
+        setRunning(!isRunning);
+      }
+
+      if (event.code === "ArrowRight") {
+        if (isRunning) {
+          setRunning(false);
+        }
+
+        setTime((prevCount) => {
+          if (prevCount !== totalFrames) {
+            return ++prevCount;
+          }
+
+          return 0;
+        });
+      }
+
+      if (event.code === "ArrowLeft") {
+        if (isRunning) {
+          setRunning(false);
+        }
+
+        setTime((prevCount) => {
+          if (prevCount !== 0) {
+            return --prevCount;
+          }
+
+          return totalFrames;
+        });
+      }
+    },
+    [isRunning, time]
+  );
 
   const resizeHandler = () => {
     if (threeRef.current) {
@@ -99,15 +155,17 @@ export const useThree = () => {
   }, [time]);
 
   const loop = useCallback(() => {
-    rafRef.current = requestAnimationFrame(loop);
-    setTime((prevCount) => {
-      if (prevCount !== totalFrames) {
-        return ++prevCount;
-      }
+    if (isRunning) {
+      rafRef.current = requestAnimationFrame(loop);
+      setTime((prevCount) => {
+        if (prevCount !== totalFrames) {
+          return ++prevCount;
+        }
 
-      return 0;
-    });
-  }, [time]);
+        return 0;
+      });
+    }
+  }, [isRunning]);
 
   useEffect(() => {
     rafRef.current = requestAnimationFrame(loop);
@@ -119,6 +177,7 @@ export const useThree = () => {
   }, [loop]);
 
   useEventListener("resize", resizeHandler);
+  useEventListener("keydown", keyHandler);
 
   return { threeRef };
 };
