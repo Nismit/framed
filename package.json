@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sentry/react": "^7.33.0",
-    "@sentry/tracing": "^7.33.0",
+    "@sentry/react": "^7.47.0",
+    "@sentry/tracing": "^7.47.0",
     "date-fns": "2.29.3",
     "preact": "10.13.1",
     "three": "0.150.1"
