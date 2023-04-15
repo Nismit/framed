@@ -75,7 +75,7 @@ void main( void ) {
   float triangle = sdEquilateralTriangle(p * 1.76);
   float box = sdBox(zoom, vec2(0.5, 0.5));
   float rhombus = sdRhombus(pan, vec2(0.5, 0.5));
-  vec3 bg = vec3(0.239,0.251,0.227);
+  vec3 bg = vec3(0.239,0.251,0.227) * 0.2;
   vec3 fill = vec3(0.522,0.6721,0.949);
 
   col = bg;
