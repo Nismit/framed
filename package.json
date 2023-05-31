@@ -13,7 +13,7 @@
     "@sentry/tracing": "^7.48.0",
     "date-fns": "2.30.0",
     "preact": "10.15.1",
-    "three": "0.152.2"
+    "three": "0.153.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "2.5.0",
