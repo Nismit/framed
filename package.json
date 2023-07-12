@@ -12,7 +12,7 @@
     "@sentry/react": "^7.48.0",
     "@sentry/tracing": "^7.48.0",
     "date-fns": "2.30.0",
-    "preact": "10.15.1",
+    "preact": "10.16.0",
     "three": "0.154.0"
   },
   "devDependencies": {
