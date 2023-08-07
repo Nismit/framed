@@ -21,7 +21,7 @@
     "@vitejs/plugin-legacy": "^4.0.2",
     "terser": "^5.16.9",
     "typescript": "5.1.6",
-    "vite": "4.4.6",
+    "vite": "4.4.9",
     "vite-plugin-glsl": "1.1.2"
   }
 }
