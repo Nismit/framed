@@ -31,6 +31,7 @@ const fragmentMap: Record<string, Promise<string>> = {
   Rectangle10: import("../fragments/rectangle10.frag").then((f) => f.default),
   // Spring: import("../fragments/spring.frag").then((f) => f.default),
   Summer: import("../fragments/summer.frag").then((f) => f.default),
+  Revise: import("../fragments/revise.frag").then((f) => f.default),
 };
 
 export const pickRandomFragment = async (current: string) => {
