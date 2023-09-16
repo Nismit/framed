@@ -1,10 +1,10 @@
 import { useRef, useEffect, useState, useCallback } from "preact/hooks";
-import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
+import { Scene, PerspectiveCamera, WebGLRenderer, Vector2, Clock } from "three";
 // import Stats from "three/examples/jsm/libs/stats.module";
 import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
 import { pickRandomFragment } from "../fragments";
-import fragmentCode from "../fragments/summer.frag";
+import fragmentCode from "../fragments/revise.frag";
 
 // ms * sec * min * hour
 // const INTERVAL_TIME = 1000 * 60 * 60 * 1;
@@ -13,6 +13,7 @@ const INTERVAL_TIME = 1000 * 60 * 30; // every 30 mins
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, 1, 0.1, 10);
 const renderer = new WebGLRenderer({});
+let clock = new Clock(false);
 
 // Stats
 // const stats = Stats();
@@ -32,6 +33,9 @@ const baseObject = new baseMesh({
       value: new Vector2(),
     },
     time: {
+      value: 0,
+    },
+    elapsedTime: {
       value: 0,
     },
   },
@@ -118,6 +122,7 @@ export const useThree = () => {
   const render = (frame?: number) => {
     // sketch.time = frame ?? time;
     baseObject.time = frame ?? time;
+    baseObject.elapsedTime = clock.getElapsedTime();
     renderer.render(scene, camera);
     // stats.update();
   };
@@ -157,6 +162,12 @@ export const useThree = () => {
   const loop = useCallback(() => {
     if (isRunning) {
       rafRef.current = requestAnimationFrame(loop);
+
+      let elapsedTime = clock.getElapsedTime();
+      if (elapsedTime > 4) {
+        clock = new Clock();
+      }
+
       setTime((prevCount) => {
         if (prevCount !== totalFrames) {
           return ++prevCount;
@@ -168,6 +179,7 @@ export const useThree = () => {
   }, [isRunning]);
 
   useEffect(() => {
+    clock.start();
     rafRef.current = requestAnimationFrame(loop);
     return () => {
       if (rafRef.current) {

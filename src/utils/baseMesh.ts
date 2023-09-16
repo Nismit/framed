@@ -72,6 +72,10 @@ export default class baseMesh {
     this._uniform.time.value = value;
   }
 
+  set elapsedTime(value: number) {
+    this._uniform.elapsedTime.value = value;
+  }
+
   reGenerate() {
     this._geometry = new PlaneGeometry(2, 2);
     this._material = new RawShaderMaterial({
