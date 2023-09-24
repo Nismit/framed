@@ -32,6 +32,12 @@ const fragmentMap: Record<string, Promise<string>> = {
   // Spring: import("../fragments/spring.frag").then((f) => f.default),
   Summer: import("../fragments/summer.frag").then((f) => f.default),
   Revise: import("../fragments/revise.frag").then((f) => f.default),
+  Revise2: import("../fragments/revise2.frag").then((f) => f.default),
+};
+
+export const fragmentTimeMap: Record<string, number> = {
+  Revise: 3.1,
+  Revise2: 3.15,
 };
 
 export const pickRandomFragment = async (current: string) => {

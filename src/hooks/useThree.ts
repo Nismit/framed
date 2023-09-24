@@ -3,8 +3,8 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Vector2, Clock } from "three";
 // import Stats from "three/examples/jsm/libs/stats.module";
 import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
-import { pickRandomFragment } from "../fragments";
-import fragmentCode from "../fragments/revise.frag";
+import { pickRandomFragment, fragmentTimeMap } from "../fragments";
+import fragmentCode from "../fragments/revise2.frag";
 
 // ms * sec * min * hour
 // const INTERVAL_TIME = 1000 * 60 * 60 * 1;
@@ -24,7 +24,7 @@ camera.position.z = 3;
 // const randomFragment = pickRandomFragment("Triangle");
 const baseObject = new baseMesh({
   fragment: fragmentCode,
-  fragmentKey: "Polygon10",
+  fragmentKey: "Revise2",
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio.toFixed(1),
@@ -164,7 +164,7 @@ export const useThree = () => {
       rafRef.current = requestAnimationFrame(loop);
 
       let elapsedTime = clock.getElapsedTime();
-      if (elapsedTime > 4) {
+      if (elapsedTime > fragmentTimeMap[baseObject.key] ?? 5) {
         clock = new Clock();
       }
 
