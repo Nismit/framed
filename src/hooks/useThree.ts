@@ -4,7 +4,7 @@ import { Scene, PerspectiveCamera, WebGLRenderer, Vector2, Clock } from "three";
 import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
 import { pickRandomFragment, fragmentTimeMap } from "../fragments";
-import fragmentCode from "../fragments/revise2.frag";
+import fragmentCode from "../fragments/revise3.frag";
 
 // ms * sec * min * hour
 // const INTERVAL_TIME = 1000 * 60 * 60 * 1;
@@ -24,7 +24,7 @@ camera.position.z = 3;
 // const randomFragment = pickRandomFragment("Triangle");
 const baseObject = new baseMesh({
   fragment: fragmentCode,
-  fragmentKey: "Revise2",
+  fragmentKey: "Revise3",
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio.toFixed(1),
