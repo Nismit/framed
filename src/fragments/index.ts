@@ -34,6 +34,7 @@ const fragmentMap: Record<string, Promise<string>> = {
   Revise: import("../fragments/revise.frag").then((f) => f.default),
   Revise2: import("../fragments/revise2.frag").then((f) => f.default),
   Revise3: import("../fragments/revise3.frag").then((f) => f.default),
+  Revise4: import("../fragments/revise4.frag").then((f) => f.default),
 };
 
 export const fragmentTimeMap: Record<string, number> = {
