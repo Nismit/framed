@@ -127,6 +127,41 @@ export const useThree = () => {
     // stats.update();
   };
 
+  const loop = useCallback(() => {
+    if (isRunning) {
+      rafRef.current = requestAnimationFrame(loop);
+
+      let elapsedTime = clock.getElapsedTime();
+      if (elapsedTime > fragmentTimeMap[baseObject.key] ?? 5) {
+        clock = new Clock();
+      }
+
+      setTime((prevCount) => {
+        if (prevCount !== totalFrames) {
+          return ++prevCount;
+        }
+
+        return 0;
+      });
+    }
+  }, [isRunning]);
+
+  const onChangeToRandomFragment = useCallback(async () => {
+    const pickKey = await pickRandomFragment(baseObject.key);
+    baseObject.key = pickKey.key;
+    baseObject.fragment = pickKey.fragment;
+    scene.remove(baseObject.mesh);
+    baseObject.reGenerate();
+    scene.add(baseObject.mesh);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("click", onChangeToRandomFragment);
+    return () => {
+      window.removeEventListener("click", onChangeToRandomFragment);
+    };
+  }, [onChangeToRandomFragment]);
+
   useEffect(() => {
     let interval: number;
     if (threeRef.current) {
@@ -158,25 +193,6 @@ export const useThree = () => {
   useEffect(() => {
     render();
   }, [time]);
-
-  const loop = useCallback(() => {
-    if (isRunning) {
-      rafRef.current = requestAnimationFrame(loop);
-
-      let elapsedTime = clock.getElapsedTime();
-      if (elapsedTime > fragmentTimeMap[baseObject.key] ?? 5) {
-        clock = new Clock();
-      }
-
-      setTime((prevCount) => {
-        if (prevCount !== totalFrames) {
-          return ++prevCount;
-        }
-
-        return 0;
-      });
-    }
-  }, [isRunning]);
 
   useEffect(() => {
     clock.start();
