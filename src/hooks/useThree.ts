@@ -1,13 +1,12 @@
 import { useRef, useEffect, useState, useCallback } from "preact/hooks";
 import { Scene, PerspectiveCamera, WebGLRenderer, Vector2, Clock } from "three";
-// import Stats from "three/examples/jsm/libs/stats.module";
-import { useEventListener } from "./useEventListener";
 import baseMesh from "../utils/baseMesh";
-import { pickRandomFragment, fragmentTimeMap } from "../fragments";
 import fragmentCode from "../fragments/revise4.frag";
+import { pickRandomFragment, fragmentTimeMap } from "../fragments";
+import { useURLParams } from "./useURLParams";
+import { useEventListener } from "./useEventListener";
 
 // ms * sec * min * hour
-// const INTERVAL_TIME = 1000 * 60 * 60 * 1;
 const INTERVAL_TIME = 1000 * 60 * 30; // every 30 mins
 
 const scene = new Scene();
@@ -15,16 +14,17 @@ const camera = new PerspectiveCamera(75, 1, 0.1, 10);
 const renderer = new WebGLRenderer({});
 let clock = new Clock(false);
 
-// Stats
-// const stats = Stats();
-// document.body.appendChild(stats.dom);
+const isRandom = useURLParams("random")
+  ? useURLParams("random") === "true"
+  : false;
 
 // Config
 camera.position.z = 3;
-// const randomFragment = pickRandomFragment("Triangle");
+const defaultKey = "Revise4";
+const randomFragment = await pickRandomFragment(defaultKey);
 const baseObject = new baseMesh({
-  fragment: fragmentCode,
-  fragmentKey: "Revise4",
+  fragment: isRandom ? randomFragment.fragment : fragmentCode,
+  fragmentKey: isRandom ? randomFragment.key : defaultKey,
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio.toFixed(1),
