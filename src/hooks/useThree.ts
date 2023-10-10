@@ -14,17 +14,12 @@ const camera = new PerspectiveCamera(75, 1, 0.1, 10);
 const renderer = new WebGLRenderer({});
 let clock = new Clock(false);
 
-const isRandom = useURLParams("random")
-  ? useURLParams("random") === "true"
-  : false;
-
 // Config
 camera.position.z = 3;
 const defaultKey = "Revise4";
-const randomFragment = await pickRandomFragment(defaultKey);
 const baseObject = new baseMesh({
-  fragment: isRandom ? randomFragment.fragment : fragmentCode,
-  fragmentKey: isRandom ? randomFragment.key : defaultKey,
+  fragment: fragmentCode,
+  fragmentKey: defaultKey,
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio.toFixed(1),
@@ -47,6 +42,9 @@ export const useThree = () => {
   const [isRunning, setRunning] = useState(true);
   const threeRef = useRef<HTMLDivElement>(null);
   const totalFrames = 300;
+  const isRandom = useURLParams("random")
+    ? useURLParams("random") === "true"
+    : false;
 
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -167,7 +165,15 @@ export const useThree = () => {
     if (threeRef.current) {
       resizeHandler();
       threeRef.current.appendChild(renderer.domElement);
-      scene.add(baseObject.mesh);
+      (async () => {
+        if (isRandom) {
+          const pickKey = await pickRandomFragment(baseObject.key);
+          baseObject.key = pickKey.key;
+          baseObject.fragment = pickKey.fragment;
+          baseObject.reGenerate();
+        }
+        scene.add(baseObject.mesh);
+      })();
 
       interval = setInterval(async () => {
         const pickKey = await pickRandomFragment(baseObject.key);
