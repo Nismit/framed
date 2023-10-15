@@ -35,12 +35,14 @@ const fragmentMap: Record<string, Promise<string>> = {
   Revise2: import("../fragments/revise2.frag").then((f) => f.default),
   Revise3: import("../fragments/revise3.frag").then((f) => f.default),
   Revise4: import("../fragments/revise4.frag").then((f) => f.default),
+  Revise5: import("../fragments/revise5.frag").then((f) => f.default),
 };
 
 export const fragmentTimeMap: Record<string, number> = {
   Revise: 3.1,
   Revise2: 3.15,
   Revise3: 6,
+  Revise5: 12.5,
 };
 
 export const pickRandomFragment = async (current: string) => {

@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from "preact/hooks";
 import { Scene, PerspectiveCamera, WebGLRenderer, Vector2, Clock } from "three";
 import baseMesh from "../utils/baseMesh";
-import fragmentCode from "../fragments/revise4.frag";
+import fragmentCode from "../fragments/revise5.frag";
 import { pickRandomFragment, fragmentTimeMap } from "../fragments";
 import { useURLParams } from "./useURLParams";
 import { useEventListener } from "./useEventListener";
@@ -16,7 +16,7 @@ let clock = new Clock(false);
 
 // Config
 camera.position.z = 3;
-const defaultKey = "Revise4";
+const defaultKey = "Revise5";
 const baseObject = new baseMesh({
   fragment: fragmentCode,
   fragmentKey: defaultKey,
