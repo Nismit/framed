@@ -45,7 +45,7 @@ void main( void ) {
 
   // p *= rot(radians(28.8 * elapsedTime));
 
-  for(float i = 0.; i < 15.0; i++) {
+  for(float i = 0.; i < 10.0; i++) {
     float slipTime = elapsedTime * .5;
     float py = amplitude * sin(w * slipTime - phase + (i * .2));
     float px = -amplitude * sin(w * slipTime * 2. - phase + (i * .3));
@@ -54,15 +54,15 @@ void main( void ) {
 
     vec2 absP = abs(anim);
     float d = length(absP - min(absP.x + absP.y, .9)) * 1.2;
-    d += smoothstep(.8, abs(d), length(uv));
+    d += smoothstep(.4, .1, length(uv) - d);
     d *= exp(-length(abs(uv)));
 
-    d = 0.03 / d;
+    d = 0.02 / d;
     d = abs(d);
 
-    vec3 col = palette(length(anim) / length(p), palA, palB, palC, palD);
+    vec3 col = palette(anim.x * anim.y / length(p), palA, palB, palC, palD);
 
-    finalColor += col * smoothstep(.0, .90, d);
+    finalColor += col * smoothstep(.0, 1., d);
   }
 
   gl_FragColor = vec4(finalColor, 1.0);
