@@ -52,7 +52,7 @@ void main( void ) {
 
     vec2 anim = vec2(p.x + px, p.y + py);
 
-    vec2 absP = abs(anim);
+    vec2 absP = anim;
     float d = length(absP - min(absP.x + absP.y, .9)) * 1.2;
     d += smoothstep(.4, .1, length(uv) - d);
     d *= exp(-length(abs(uv)));
