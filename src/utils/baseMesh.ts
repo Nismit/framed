@@ -69,13 +69,13 @@ export default class baseMesh {
   }
 
   set time(value: number) {
-    if (Object.hasOwn(this._uniform, "time")) {
+    if (this._uniform.time) {
       this._uniform.time.value = value;
     }
   }
 
   set elapsedTime(value: number) {
-    if (Object.hasOwn(this._uniform, "elapsedTime")) {
+    if (this._uniform.elapsedTime) {
       this._uniform.elapsedTime.value = value;
     }
   }
