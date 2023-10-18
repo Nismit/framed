@@ -118,11 +118,12 @@ export const useThree = () => {
   };
 
   const render = (frame?: number) => {
-    // sketch.time = frame ?? time;
-    baseObject.time = frame ?? time;
+    const localTime = frame ?? time;
+    if (localTime) {
+      baseObject.time = localTime;
+    }
     baseObject.elapsedTime = clock.getElapsedTime();
     renderer.render(scene, camera);
-    // stats.update();
   };
 
   const loop = useCallback(() => {
@@ -191,7 +192,8 @@ export const useThree = () => {
         scene.remove(baseObject.mesh);
         renderer.dispose();
         threeRef.current.removeChild(renderer.domElement);
-        interval && clearInterval(interval);
+        clearInterval(interval);
+        clock = new Clock(false);
       }
     };
   }, [threeRef]);

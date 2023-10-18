@@ -42,7 +42,7 @@ export const fragmentTimeMap: Record<string, number> = {
   Revise: 3.1,
   Revise2: 3.15,
   Revise3: 6,
-  Revise5: 12.5,
+  Revise5: 3.9,
 };
 
 export const pickRandomFragment = async (current: string) => {

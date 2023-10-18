@@ -14,17 +14,10 @@ vec3 palette( float t, vec3 a, vec3 b, vec3 c, vec3 d ) {
   return a + b*cos( 6.28318*(c*t+d) );
 }
 
-float sdBox( vec2 p, vec2 b ){
-  vec2 d = abs(p)-b;
-  return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
-}
-
-float sdHexagon( vec2 p, float r ) {
-  const vec3 k = vec3(-0.866025404,0.5,0.577350269);
-  p = abs(p);
-  p -= 2.0*min(dot(k.xy,p),0.0)*k.xy;
-  p -= vec2(clamp(p.x, -k.z*r, k.z*r), r);
-  return length(p)*sign(p.y);
+// Ref: https://iquilezles.org/articles/distfunctions2d/
+float sdCircle( vec2 p, float r ) {
+  vec2 absP = abs(p);
+  return length(p) - r;
 }
 
 void main( void ) {
@@ -37,29 +30,39 @@ void main( void ) {
   vec3 palC = vec3(0.860, 1.110, 1.000);
   vec3 palD = vec3(-0.072, -0.247, 0.367);
 
+  // Center lighting ball
+  finalColor += 0.05 / length(p);
+
+  p *= 3.;
+
   // モワッと広がる動きっぽい
   // p /= exp(mod(time*10.,3.14159));
 	// rz *= pow(abs((0.1-circ(p))),.9);
 
-  // p /= exp(mod(elapsedTime *.5, PI)) * sin(elapsedTime *.5);
+  float amplitude = 2.4;
+  float w = 1.;
+  float phase = 0.3;
 
-  for(float i = 0.; i < 3.0; i++) {
+  // p *= rot(radians(28.8 * elapsedTime));
 
-    p = fract(p * 1.5) - .5;
+  for(float i = 0.; i < 10.0; i++) {
+    float slipTime = elapsedTime * .5;
+    float py = amplitude * sin(w * slipTime - phase + (i * .2));
+    float px = -amplitude * sin(w * slipTime * 2. - phase + (i * .3));
 
+    vec2 anim = vec2(p.x + px, p.y + py);
 
-    float d = 0.;
-    float f = smoothstep(length(abs(p)) - .1, sdBox(sin(uv * PI * (i + .5)) * .3, vec2(.55, .55)), sdHexagon(p, .33));
-    d += f + f;
-    d *= exp(-length(uv));
+    vec2 absP = anim;
+    float d = length(absP - min(absP.x + absP.y, .9)) * 1.2;
+    d += smoothstep(.4, .1, length(uv) - d);
+    d *= exp(-length(abs(uv)));
 
-    d = cos(d * 5. + elapsedTime * .8) / .5;
+    d = 0.02 / d;
     d = abs(d);
-    d = 0.1 / d;
 
-    vec3 col = palette(f / .9 + length(p), palA, palB, palC, palD);
+    vec3 col = palette(anim.x * anim.y / length(p), palA, palB, palC, palD);
 
-    finalColor += col * d;
+    finalColor += col * smoothstep(.0, 1., d);
   }
 
   gl_FragColor = vec4(finalColor, 1.0);
