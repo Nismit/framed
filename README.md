@@ -14,3 +14,17 @@ GLSL gallery app for [Framed MONO X7](https://mono.frm.fm/en/shop/)
 - Auto detect location from user ip
 - Weather forecast based on the location
 - Auto change GLSL randomly
+- Support initial random pattern param (`https://framed-ddc.pages.dev/?random=true`)
+
+## Build
+
+Required `OpenWeatherAPI` key https://openweathermap.org/
+
+Set key to `/.env.local`
+```
+VITE_WEATHER_API_KEY=XXXXXXXXXX
+```
+
+```
+npm run build
+```

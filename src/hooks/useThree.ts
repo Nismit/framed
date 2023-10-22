@@ -1,29 +1,25 @@
 import { useRef, useEffect, useState, useCallback } from "preact/hooks";
-import { Scene, PerspectiveCamera, WebGLRenderer, Vector2 } from "three";
-// import Stats from "three/examples/jsm/libs/stats.module";
-import { useEventListener } from "./useEventListener";
+import { Scene, PerspectiveCamera, WebGLRenderer, Vector2, Clock } from "three";
 import baseMesh from "../utils/baseMesh";
-import { pickRandomFragment } from "../fragments";
-import fragmentCode from "../fragments/spring.frag";
+import fragmentCode from "../fragments/revise5.frag";
+import { pickRandomFragment, fragmentTimeMap } from "../fragments";
+import { useURLParams } from "./useURLParams";
+import { useEventListener } from "./useEventListener";
 
 // ms * sec * min * hour
-// const INTERVAL_TIME = 1000 * 60 * 60 * 1;
 const INTERVAL_TIME = 1000 * 60 * 30; // every 30 mins
 
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, 1, 0.1, 10);
 const renderer = new WebGLRenderer({});
-
-// Stats
-// const stats = Stats();
-// document.body.appendChild(stats.dom);
+let clock = new Clock(false);
 
 // Config
 camera.position.z = 3;
-// const randomFragment = pickRandomFragment("Triangle");
+const defaultKey = "Revise5";
 const baseObject = new baseMesh({
   fragment: fragmentCode,
-  fragmentKey: "Polygon10",
+  fragmentKey: defaultKey,
   uniform: {
     pixelRatio: {
       value: window.devicePixelRatio.toFixed(1),
@@ -32,6 +28,9 @@ const baseObject = new baseMesh({
       value: new Vector2(),
     },
     time: {
+      value: 0,
+    },
+    elapsedTime: {
       value: 0,
     },
   },
@@ -43,6 +42,9 @@ export const useThree = () => {
   const [isRunning, setRunning] = useState(true);
   const threeRef = useRef<HTMLDivElement>(null);
   const totalFrames = 300;
+  const isRandom = useURLParams("random")
+    ? useURLParams("random") === "true"
+    : false;
 
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -116,18 +118,63 @@ export const useThree = () => {
   };
 
   const render = (frame?: number) => {
-    // sketch.time = frame ?? time;
-    baseObject.time = frame ?? time;
+    const localTime = frame ?? time;
+    if (localTime) {
+      baseObject.time = localTime;
+    }
+    baseObject.elapsedTime = clock.getElapsedTime();
     renderer.render(scene, camera);
-    // stats.update();
   };
+
+  const loop = useCallback(() => {
+    if (isRunning) {
+      rafRef.current = requestAnimationFrame(loop);
+
+      let elapsedTime = clock.getElapsedTime();
+      if (elapsedTime > fragmentTimeMap[baseObject.key] ?? 5) {
+        clock = new Clock();
+      }
+
+      setTime((prevCount) => {
+        if (prevCount !== totalFrames) {
+          return ++prevCount;
+        }
+
+        return 0;
+      });
+    }
+  }, [isRunning]);
+
+  const onChangeToRandomFragment = useCallback(async () => {
+    const pickKey = await pickRandomFragment(baseObject.key);
+    baseObject.key = pickKey.key;
+    baseObject.fragment = pickKey.fragment;
+    scene.remove(baseObject.mesh);
+    baseObject.reGenerate();
+    scene.add(baseObject.mesh);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("click", onChangeToRandomFragment);
+    return () => {
+      window.removeEventListener("click", onChangeToRandomFragment);
+    };
+  }, [onChangeToRandomFragment]);
 
   useEffect(() => {
     let interval: number;
     if (threeRef.current) {
       resizeHandler();
       threeRef.current.appendChild(renderer.domElement);
-      scene.add(baseObject.mesh);
+      (async () => {
+        if (isRandom) {
+          const pickKey = await pickRandomFragment(baseObject.key);
+          baseObject.key = pickKey.key;
+          baseObject.fragment = pickKey.fragment;
+          baseObject.reGenerate();
+        }
+        scene.add(baseObject.mesh);
+      })();
 
       interval = setInterval(async () => {
         const pickKey = await pickRandomFragment(baseObject.key);
@@ -145,7 +192,8 @@ export const useThree = () => {
         scene.remove(baseObject.mesh);
         renderer.dispose();
         threeRef.current.removeChild(renderer.domElement);
-        interval && clearInterval(interval);
+        clearInterval(interval);
+        clock = new Clock(false);
       }
     };
   }, [threeRef]);
@@ -154,20 +202,8 @@ export const useThree = () => {
     render();
   }, [time]);
 
-  const loop = useCallback(() => {
-    if (isRunning) {
-      rafRef.current = requestAnimationFrame(loop);
-      setTime((prevCount) => {
-        if (prevCount !== totalFrames) {
-          return ++prevCount;
-        }
-
-        return 0;
-      });
-    }
-  }, [isRunning]);
-
   useEffect(() => {
+    clock.start();
     rafRef.current = requestAnimationFrame(loop);
     return () => {
       if (rafRef.current) {

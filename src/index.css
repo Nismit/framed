@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
@@ -10,13 +14,8 @@ body {
   color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  max-width: 1080px;
   aspect-ratio: 16 / 9;
   position: relative;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 #app {
@@ -34,7 +33,6 @@ body {
   margin: 0;
   font-size: 22px;
   font-weight: 500;
-  /* text-transform: uppercase; */
   text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
 }
 
@@ -75,6 +73,22 @@ body {
   .forecast {
     display: none;
   }
+
+  .date,
+  .location {
+    margin: 0;
+    font-size: 16px;
+  }
+
+  .time p {
+    font-size: 16px;
+  }
+
+  .info > div:not(.forecast) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .forecast svg {
@@ -100,7 +114,8 @@ body {
 
 .canvasContainer {
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  height: 100svh;
 }
 
 .loader__container {
