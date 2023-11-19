@@ -131,7 +131,10 @@ export const useThree = () => {
       rafRef.current = requestAnimationFrame(loop);
 
       let elapsedTime = clock.getElapsedTime();
-      if (elapsedTime > fragmentTimeMap[baseObject.key] ?? 5) {
+      if (
+        elapsedTime >
+        (fragmentTimeMap[baseObject.key] ? fragmentTimeMap[baseObject.key] : 5)
+      ) {
         clock = new Clock();
       }
 
