@@ -7,9 +7,6 @@ uniform vec2 resolution;
 #define PI 3.14159265359
 float TAU = PI * 2.0;
 
-#include ./utils/hsv2rgb.frag;
-#include ./utils/cubicInOut.frag;
-
 // Ref: https://www.shadertoy.com/view/fdSBDD
 float circle(vec2 uv, float blur) {
   return smoothstep(0., blur, 1. - length(uv));

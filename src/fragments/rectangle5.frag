@@ -8,9 +8,6 @@ float TAU = PI * 2.0;
 
 #define SMOOTH(r,R) (1.0-smoothstep(R-1.0,R+1.0, r))
 
-#include ./utils/hsv2rgb.frag;
-#include ./utils/cubicInOut.frag;
-
 // from https://shadertoyunofficial.wordpress.com/2019/01/02/programming-tricks-in-shadertoy-glsl/
 #define hash21(p) fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453)
 

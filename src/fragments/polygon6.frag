@@ -7,9 +7,6 @@ uniform vec2 resolution;
 #define TWO_PI 6.28318530718
 float TAU = PI * 2.0;
 
-#include ./utils/hsv2rgb.frag;
-#include ./utils/cubicInOut.frag;
-
 float scale = 6.0/PI;
 
 float polygon(vec2 p, float scale, float width, int polygon) {

@@ -8,8 +8,12 @@ float TAU = PI * 2.0;
 
 #define SMOOTH(r,R) (1.0-smoothstep(R-1.0,R+1.0, r))
 
-#include ./utils/hsv2rgb.frag;
-#include ./utils/cubicInOut.frag;
+// https://www.shadertoy.com/view/MsS3Wc
+vec3 hsv2rgb( in vec3 c ) {
+  vec3 rgb = clamp( abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
+	rgb = rgb*rgb*(3.0-2.0*rgb); // cubic smoothing
+	return c.z * mix( vec3(1.0), rgb, c.y);
+}
 
 mat2 rotation(float a) {
   return mat2( cos(a), -sin(a), sin(a), cos(a) );

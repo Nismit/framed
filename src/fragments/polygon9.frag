@@ -7,9 +7,6 @@ uniform vec2 resolution;
 #define TWO_PI 6.28318530718
 float TAU = PI * 2.0;
 
-#include utils/hsv2rgb.frag;
-#include utils/cubicInOut.frag;
-
 float scale = 6.0/PI;
 
 mat2 scaleSize(vec2 _scale) {
@@ -58,7 +55,7 @@ void main( void ) {
     center.y -= 0.97;
     center.y += (loop * 1.95);
     center *= rotation(radians(90.0));
-    
+
 		float shape = sdBox(center, vec2(0.8, 0.2));
 
     vec3 bg = vec3(0.949,0.843,0.522) * 0.98;

@@ -6,9 +6,6 @@ uniform vec2 resolution;
 #define PI 3.14159265359
 float TAU = PI * 2.0;
 
-#include ./utils/hsv2rgb.frag;
-#include ./utils/cubicInOut.frag;
-
 void main( void ) {
   vec2 p = (gl_FragCoord.xy / resolution.xy) * (2.0 / pixelRatio) - 1.0;
   p.x *= resolution.x / resolution.y;

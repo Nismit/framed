@@ -6,9 +6,6 @@ uniform vec2 resolution;
 #define PI 3.14159265359
 float TAU = PI * 2.0;
 
-#include ./utils/hsv2rgb.frag;
-#include ./utils/cubicInOut.frag;
-
 mat2 scale(vec2 _scale) {
   return mat2(_scale.x, 0.0, 0.0 ,_scale.y);
 }
