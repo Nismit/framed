@@ -1,4 +1,4 @@
-import { h } from "preact";
+import { Fragment, h } from "preact";
 import { Suspense } from "preact/compat";
 import { format, startOfDay, add, isWithinInterval } from "date-fns";
 import { Time } from "./components/Time";
@@ -13,7 +13,7 @@ export function App() {
   const { filteredData } = useWeather();
 
   return (
-    <>
+    <Fragment>
       <Canvas />
       <div className="info">
         <div className="forecast">
@@ -63,6 +63,6 @@ export function App() {
           <Time />
         </div>
       </div>
-    </>
+    </Fragment>
   );
 }
