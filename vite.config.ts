@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
 import glsl from "vite-plugin-glsl";
-// Vite v4 does not work on Framed
+// Framed runs on an Old Chronium version
 import legacy from "@vitejs/plugin-legacy";
 
 // https://vitejs.dev/config/
