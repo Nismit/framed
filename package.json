@@ -16,7 +16,7 @@
     "three": "0.173.0"
   },
   "devDependencies": {
-    "@preact/preset-vite": "2.10.1",
+    "@preact/preset-vite": "2.10.6",
     "@types/three": "0.173.0",
     "@vitejs/plugin-legacy": "^6.0.0",
     "terser": "^5.19.4",
