@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sentry/react": "^7.69.0",
+    "@sentry/react": "^10.0.0",
     "@sentry/tracing": "^7.69.0",
     "date-fns": "4.1.0",
     "preact": "10.25.4",
